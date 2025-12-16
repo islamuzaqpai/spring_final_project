@@ -23,7 +23,7 @@ public class ActorServiceImpl {
         return actorMapper.toDto(actorRepository.findById(id).orElse(null));
     }
 
-    public List<ActorDto> getAllDirectors() {
+    public List<ActorDto> getAllActors() {
         return actorMapper.toDtoList(actorRepository.findAll());
     }
 

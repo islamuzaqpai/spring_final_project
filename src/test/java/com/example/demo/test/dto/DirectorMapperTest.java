@@ -1,6 +1,7 @@
 package com.example.demo.test.dto;
 
 import com.example.demo.restApi.dto.DirectorDto;
+import com.example.demo.restApi.dto.MovieDto;
 import com.example.demo.restApi.entity.Director;
 import com.example.demo.restApi.entity.Movie;
 import com.example.demo.restApi.mapper.DirectorMapper;
@@ -36,6 +37,30 @@ public class DirectorMapperTest {
         Assertions.assertNotNull(directorDto.getId());
         Assertions.assertNotNull(directorDto.getNameDto());
         Assertions.assertNotNull(directorDto.getMoviesIds());
+
+        Assertions.assertEquals(director.getId(), directorDto.getId());
+        Assertions.assertEquals(director.getName(), directorDto.getNameDto());
+
+        List<Long> moviesIds = director.getMovies().stream().map(Movie::getId).collect(Collectors.toList());
+
+        Assertions.assertEquals(moviesIds, directorDto.getMoviesIds());
+    }
+
+    @Test
+    void toEntityTest() {
+        DirectorDto directorDto = new DirectorDto(1L, "First", null);
+
+        MovieDto movieDto1 = new MovieDto(1L, "First", null, null);
+        MovieDto movieDto2 = new MovieDto(2L, "Second", null, null);
+
+        directorDto.setMoviesIds(List.of(movieDto1.getId(), movieDto2.getId()));
+
+        Director director = directorMapper.toEntity(directorDto);
+
+        Assertions.assertNotNull(director);
+        Assertions.assertNotNull(director.getId());
+        Assertions.assertNotNull(director.getName());
+        Assertions.assertNotNull(director.getMovies());
 
         Assertions.assertEquals(director.getId(), directorDto.getId());
         Assertions.assertEquals(director.getName(), directorDto.getNameDto());

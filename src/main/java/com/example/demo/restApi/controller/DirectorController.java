@@ -3,13 +3,12 @@ package com.example.demo.restApi.controller;
 import com.example.demo.restApi.dto.DirectorDto;
 import com.example.demo.restApi.service.implementation.DirectorServiceImpl;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @AllArgsConstructor
-@Controller
+@RestController
 public class DirectorController {
 
     private final DirectorServiceImpl directorService;

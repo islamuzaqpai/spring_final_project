@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @AllArgsConstructor
-@Controller
+@RestController
 public class MovieController {
     private final MovieServiceImpl movieService;
 
@@ -19,12 +19,12 @@ public class MovieController {
     }
 
     @GetMapping("/movies")
-    public List<MovieDto> getAllDirectors() {
+    public List<MovieDto> getAllMovies() {
         return movieService.getAllMovies();
     }
 
     @PostMapping("/movies")
-    public MovieDto addDirector(@RequestBody MovieDto movieDto) {
+    public MovieDto addDMovie(@RequestBody MovieDto movieDto) {
         return movieService.addMovie(movieDto);
     }
 

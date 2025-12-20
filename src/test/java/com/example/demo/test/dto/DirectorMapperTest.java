@@ -5,13 +5,11 @@ import com.example.demo.restApi.dto.MovieDto;
 import com.example.demo.restApi.entity.Director;
 import com.example.demo.restApi.entity.Movie;
 import com.example.demo.restApi.mapper.DirectorMapper;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,5 +66,45 @@ public class DirectorMapperTest {
         List<Long> moviesIds = director.getMovies().stream().map(Movie::getId).collect(Collectors.toList());
 
         Assertions.assertEquals(moviesIds, directorDto.getMoviesIds());
+    }
+
+    @Test
+    void toDtoListTest() {
+        Director director1 = new Director(1L, "First", null);
+        Director director2 = new Director(2L, "Second", null);
+        Director director3 = new Director(3L, "Third", null);
+
+        Movie movie1 = new Movie(1L, "First", null, null);
+        Movie movie2 = new Movie(2L, "Second", null, null);
+        Movie movie3 = new Movie(3L, "Third", null, null);
+
+        director1.setMovies(List.of(movie1));
+        director2.setMovies(List.of(movie2));
+        director3.setMovies(List.of(movie3));
+
+        List<Director> directors = List.of(director1, director2, director3);
+
+        List<DirectorDto> directorsDto = directorMapper.toDtoList(directors);
+
+        Assertions.assertNotNull(directorsDto);
+        Assertions.assertNotEquals(directorsDto.size(), 0);
+
+        for (int i = 0; i < directorsDto.size(); i++) {
+            DirectorDto directorDto = directorsDto.get(i);
+
+            Director director = directors.get(i);
+
+            Assertions.assertNotNull(directorDto);
+            Assertions.assertNotNull(directorDto.getId());
+            Assertions.assertNotNull(directorDto.getNameDto());
+            Assertions.assertNotNull(directorDto.getMoviesIds());
+
+            Assertions.assertEquals(director.getId(), directorDto.getId());
+            Assertions.assertEquals(director.getName(), directorDto.getNameDto());
+
+            List<Long> moviesIds = director.getMovies().stream().map(Movie::getId).collect(Collectors.toList());
+
+            Assertions.assertEquals(moviesIds, directorDto.getMoviesIds());
+        }
     }
 }

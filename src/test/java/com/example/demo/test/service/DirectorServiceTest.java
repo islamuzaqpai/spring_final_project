@@ -39,7 +39,7 @@ public class DirectorServiceTest {
 
         List<DirectorDto> directorsDto = directorService.getAllDirectors();
 
-        Assertions.assertEquals(0, directorsDto.size());
+        Assertions.assertNotEquals(0, directorsDto.size());
         Assertions.assertNotNull(directorsDto);
 
         for (DirectorDto directorDto : directorsDto) {

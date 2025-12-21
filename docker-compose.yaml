@@ -1,0 +1,24 @@
+services:
+  spring-project:
+    build: .
+    container_name: "spring-final-project"
+    depends_on:
+      - database-servicee
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database-servicee:5432/final_project_db
+      - SPRING_DATASOURCE_USER=postgres
+      - SPRING_DATASOURCE_PASSWORD=0303
+      - SPRING_HIBERNATE_JPA_DDL_AUTO=update
+      - SPRING_JPA_SHOW_SQL=true
+    ports:
+      - 8888:8080
+
+  database-servicee:
+    image: 'postgres'
+    container_name: 'database-servicee'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=0303
+      - POSTGRES_DB=final_project_db
+    ports:
+      - 2345:5432

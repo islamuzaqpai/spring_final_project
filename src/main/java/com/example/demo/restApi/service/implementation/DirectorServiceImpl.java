@@ -6,6 +6,7 @@ import com.example.demo.restApi.entity.Movie;
 import com.example.demo.restApi.mapper.DirectorMapper;
 import com.example.demo.restApi.repository.DirectorRepository;
 import com.example.demo.restApi.service.DirectorServiceInterface;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +42,7 @@ public class DirectorServiceImpl implements DirectorServiceInterface {
         return directorMapper.toDto(directorRepository.save(director));
     }
 
+    @Transactional
     public boolean deleteDirector(Long id) {
         Director director = directorRepository.findById(id).orElse(null);
 

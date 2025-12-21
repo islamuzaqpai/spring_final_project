@@ -11,7 +11,7 @@ create table t_actors (
 create table t_movies (
     id serial primary key,
     title text not null,
-    director_id integer not null,
+    director_id integer null,
     constraint fk_director foreign key (director_id) references t_directors(id)
 );
 

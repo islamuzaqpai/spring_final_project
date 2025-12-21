@@ -18,6 +18,6 @@ public class Director {
 
     private String name;
 
-    @OneToMany(mappedBy = "director", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "director", fetch = FetchType.EAGER)
     private List<Movie> movies;
 }

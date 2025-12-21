@@ -7,6 +7,7 @@ import com.example.demo.restApi.entity.Director;
 import com.example.demo.restApi.entity.Movie;
 import com.example.demo.restApi.mapper.ActorMapper;
 import com.example.demo.restApi.repository.ActorRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
@@ -43,17 +44,17 @@ public class ActorServiceImpl {
         return actorMapper.toDto(actorRepository.save(actor));
     }
 
+    @Transactional
     public boolean deleteActor(Long id) {
         Actor actor = actorRepository.findById(id).orElse(null);
+        if (actor == null) return false;
 
-        if (actor != null) {
-            for (Movie movie : actor.getMovies()) {
-                movie.setDirector(null);
-            }
-            actorRepository.delete(actor);
-            return true;
+        for (Movie movie : actor.getMovies()) {
+            movie.getActors().remove(actor);
         }
+        actor.getMovies().clear();
 
-        return false;
+        actorRepository.delete(actor);
+        return true;
     }
 }

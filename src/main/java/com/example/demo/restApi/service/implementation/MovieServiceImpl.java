@@ -5,6 +5,7 @@ import com.example.demo.restApi.entity.Movie;
 import com.example.demo.restApi.mapper.MovieMapper;
 import com.example.demo.restApi.repository.MovieRepository;
 import com.example.demo.restApi.service.MovieServiceInterface;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
